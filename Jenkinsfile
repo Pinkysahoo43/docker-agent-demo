@@ -21,14 +21,24 @@ pipeline {
                 echo "Build Stage is in progress"
                 sh 'mvn compile'
             }
-            
-        }
+          }
         stage ('Test'){
             steps {
                 echo "Test Stage is in progress"
                 sh 'mvn test'
             }
-            
         }
+        stage ('Deploy'){
+            input{
+                message 'Do U Want to Deploy Build ?'
+                ok 'Yes i want'
+                parameters {
+                    string description: 'Who is Approver?', name: 'Approver'
+                }
+            }
+            steps{
+                echo 'Deploying Build'
+            }
     }
+}
 }
